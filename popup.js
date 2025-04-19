@@ -67,7 +67,7 @@ document.getElementById("check-status").addEventListener("click", () => {
 //   `state=${STATE}`;
 
 function fetchAssignments() {
-  const canvasToken = "7~yKEfzGwkFWA3J3KBGxyC4MeVhMaxuhHzZvuDLmvAM62JTJGLATnMh4rx6aAP9WXn"; // replace with Canvas API token
+  const canvasToken = "---"; // replace with Canvas API token
 
   fetch("https://canvas.instructure.com/api/v1/courses?enrollment_state=active", {
     headers: {
