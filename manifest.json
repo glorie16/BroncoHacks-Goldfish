@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "Study Buddy Cat",
+    "version": "1.0",
+    "description": "A cute cat helps you stay productive!",
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icons/cat16.png",
+        "48": "icons/cat48.png",
+        "128": "icons/cat128.png"
+      }
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": ["storage", "tabs"],
+    "host_permissions": ["https://canvas.instructure.com/*"]
+  }
