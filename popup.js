@@ -3,6 +3,7 @@ const catImage = document.getElementById("cat-image");
 const catMessage = document.getElementById("cat-message");
 const assignmentsContainer = document.getElementById("assignments-container");
 
+
 const characters = [
   {
     id: 'cat',
@@ -34,6 +35,12 @@ chrome.storage.local.get('selectedCharacter', (data) => {
     catImage.src = char.happy;
   } else {
     catImage.src = 'images/happy-cat.gif'; // fallback
+  }
+
+  if (catImage.complete) {
+    adjustImagePosition(); // Image already loaded (cache)
+  } else {
+    catImage.onload = adjustImagePosition; // Image is loading
   }
 });
 
@@ -69,7 +76,7 @@ document.getElementById("check-status").addEventListener("click", () => {
 //   `state=${STATE}`;
 
 function fetchAssignments() {
-  const canvasToken = "7~PAEPV8VJCr34K49hFeNGkZmFM6VtzN8Xrtcf4ZW2WzAUyXVQ6mYZZ333f9mZPJJ8"; // replace with Canvas API token
+  const canvasToken = "---"; // replace with Canvas API token
 
   fetch("https://canvas.instructure.com/api/v1/courses?enrollment_state=active", {
     headers: {
