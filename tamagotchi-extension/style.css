@@ -1,1 +1,14 @@
 
+body {
+    font-family: sans-serif;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  #pet {
+    width: 100px;
+  }
+  
+  #status {
+    margin: 10px 0;
+  }
