@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    width: 300px;
+    height: 200px;
+    text-align: center;
+    background: #f7f7f7;
+    padding: 20px;
+    background-image: url("images/background.png");
+    background-repeat: no-repeat, repeat;
+    background-size:contain;
+  }
+
+  h2{
+    font-family: Nunito;
+  }
+  .cat-container img {
+    padding-top: 95px;
+    width: 100px;
+    height: auto;
+  }
+  button {
+    margin: 10px;
+    padding: 10px;
+    background-color: #ffcccb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #ffb6b6;
+  }
+  
+  #battery {
+    width: 150px;
+  }

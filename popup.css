@@ -1,0 +1,49 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  height: 200px;
+  text-align: center;
+  background: #f7f7f7;
+  padding: 20px;
+  background-image: url("images/background.png");
+  background-repeat: no-repeat, repeat;
+  background-size:contain;
+}
+.cat-container img {
+  padding-top: 95px;
+  width: 100px;
+  height: auto;
+}
+button {
+  margin: 10px;
+  padding: 10px;
+  background-color: #ffcccb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #ffb6b6;
+}
+.assignment {
+  border: 1px solid #ccc;
+  margin: 5px;
+  padding: 5px;
+  background-color: #fff;
+}
+.assignment.completed {
+  text-decoration: line-through;
+  background-color: #d4f4dd;
+}
+.assignment.overdue {
+  background-color: #ffe5e5;
+}
+#battery {
+  width: 150px;
+}
+
+/* Moves the image up if it's tall */
+.tall-character {
+  position: relative;
+  top: -75px; /* You can adjust this as needed */
+}
