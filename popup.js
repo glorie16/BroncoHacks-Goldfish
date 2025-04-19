@@ -4,20 +4,14 @@ const catMessage = document.getElementById("cat-message");
 
 function updateCatState(isProductive) {
   if (isProductive) {
-    catImage.src = "images/happy-cat.png";
+    catImage.src = "images/happy-cat.gif";
     catMessage.textContent = "Great job! I'm so proud of you!";
   } else {
-    catImage.src = "images/sad-cat.png";
+    catImage.src = "images/sad-cat.gif";
     catMessage.textContent = "Why aren't we studying...? 😿";
   }
 }
 
-document.getElementById("start-timer").addEventListener("click", () => {
-  timerStart = Date.now();
-  chrome.storage.local.set({ timerStart });
-  catImage.src = "images/happy-cat.png";
-  catMessage.textContent = "Timer started. Let's study!";
-});
 
 document.getElementById("check-status").addEventListener("click", () => {
   chrome.storage.local.get("timerStart", (data) => {
@@ -34,3 +28,9 @@ document.getElementById("check-status").addEventListener("click", () => {
     }
   });
 });
+
+const canvasAuthUrl = `https://<your-canvas-url>/login/oauth2/auth?` +
+  `client_id=${CLIENT_ID}&` +
+  `response_type=code&` +
+  `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
+  `state=${STATE}`;
