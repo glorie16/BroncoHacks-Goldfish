@@ -26,6 +26,14 @@ button:hover {
   background-color: #ffb6b6;
 }
 
-#battery {
+#battery-img {
   width: 150px;
+}
+
+.battery-container {
+  display: flex;
+  width:100%;
+  flex-direction: row;
+  margin-left: auto;
+  justify-content: center; 
 }
