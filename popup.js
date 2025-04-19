@@ -47,7 +47,7 @@ function updateCatState(overdueAssignments, upcomingAssignments) {
     catMessage.textContent = "Oh no! You have missing assignments!";
   } else if(upcomingPercentage < 0.5){
     catImage.src = currentCharacter.sad;
-    catMessage.textContent = "Why aren't we studying...? 😿";
+    catMessage.textContent = "Why aren't we studying...?";
 } else{
   catImage.src = currentCharacter.happy;
   catMessage.textContent = "Great job! I'm so proud of you!";
@@ -67,7 +67,7 @@ document.getElementById("check-status").addEventListener("click", () => {
 //   `state=${STATE}`;
 
 function fetchAssignments() {
-  const canvasToken = "---"; // replace with Canvas API token
+  const canvasToken = "7~PAEPV8VJCr34K49hFeNGkZmFM6VtzN8Xrtcf4ZW2WzAUyXVQ6mYZZ333f9mZPJJ8"; // replace with Canvas API token
 
   fetch("https://canvas.instructure.com/api/v1/courses?enrollment_state=active", {
     headers: {
@@ -129,11 +129,33 @@ function displayAssignments(assignments) {
     `;
     assignmentsContainer.appendChild(div);
     if (isOverdue) anyOverdue = true;
+    updateBattery();
 });
+
+function updateBattery() {
+  // const total = assignments.length;
+  // const completed = assignments.filter(a => a.completed).length;
+  const completedUpcoming = upcomingAssignments.filter(a => a.completed).length;
+
+  const percentage = (completedUpcoming / upcomingAssignments.length) * 100;
+
+  if (percentage === 100) {
+    battery.src = "images/battery-full.png";
+  } else if (percentage >= 67) {
+    battery.src = "images/battery-quarter.png";
+  } else if (percentage >= 34) {
+    battery.src = "images/battery-half.png";
+  } else if (percentage > 0) {
+    battery.src = "images/battery-low.png";
+  } else {
+    battery.src = "images/battery-none.png";
+  }
+}
 
 updatedCompletedText(upcomingAssignments);
 updateCatState(overdueAssignments, upcomingAssignments);
 }
+
 
 function updatedCompletedText(upcomingAssignments){
   // Counts completed upcoming assignments
@@ -141,11 +163,11 @@ function updatedCompletedText(upcomingAssignments){
   const completedText = document.getElementById("completed-text");
 
   if(completedText){
-    completedText.textContent = `Completed Upcoming Assignments: ${completedUpcoming}/${upcomingAssignments.length}`;
+    completedText.textContent = `Completed Upcoming Assignments for This Week: ${completedUpcoming}/${upcomingAssignments.length}`;
   } else{
     const textElement = document.createElement("p");
     textElement.id = "completed-text";
-    textElement.textContent = `Completed Upcoming Assignments: ${completedUpcoming}/${upcomingAssignments.length}`;
+    textElement.textContent = `Completed Upcoming Assignments for This Week: ${completedUpcoming}/${upcomingAssignments.length}`;
     catMessage.insertAdjacentElement("afterend", textElement);
   }
 }
