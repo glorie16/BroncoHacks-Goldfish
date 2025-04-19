@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Study Buddy Cat",
+  "name": "Study Buddy",
   "version": "1.0",
-  "description": "A cute cat helps you stay productive!",
+  "description": "A cute character helps you stay productive!",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
