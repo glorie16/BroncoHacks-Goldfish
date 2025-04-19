@@ -9,6 +9,10 @@ body {
     background-repeat: no-repeat, repeat;
     background-size:contain;
   }
+
+  h2{
+    font-family: Nunito;
+  }
   .cat-container img {
     padding-top: 95px;
     width: 100px;

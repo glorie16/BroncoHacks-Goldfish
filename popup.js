@@ -47,11 +47,13 @@ function updateCatState(overdueAssignments, upcomingAssignments) {
     catMessage.textContent = "Oh no! You have missing assignments!";
   } else if(upcomingPercentage < 0.5){
     catImage.src = currentCharacter.sad;
-    catMessage.textContent = "Why aren't we studying...? 😿";
+    catMessage.textContent = "Why aren't we studying...?";
 } else{
   catImage.src = currentCharacter.happy;
   catMessage.textContent = "Great job! I'm so proud of you!";
   }
+  adjustImagePosition();
+
 }
 
 document.getElementById("check-status").addEventListener("click", () => {
@@ -67,7 +69,7 @@ document.getElementById("check-status").addEventListener("click", () => {
 //   `state=${STATE}`;
 
 function fetchAssignments() {
-  const canvasToken = "7~yKEfzGwkFWA3J3KBGxyC4MeVhMaxuhHzZvuDLmvAM62JTJGLATnMh4rx6aAP9WXn"; // replace with Canvas API token
+  const canvasToken = "7~PAEPV8VJCr34K49hFeNGkZmFM6VtzN8Xrtcf4ZW2WzAUyXVQ6mYZZ333f9mZPJJ8"; // replace with Canvas API token
 
   fetch("https://canvas.instructure.com/api/v1/courses?enrollment_state=active", {
     headers: {
@@ -147,5 +149,19 @@ function updatedCompletedText(upcomingAssignments){
     textElement.id = "completed-text";
     textElement.textContent = `Completed Upcoming Assignments: ${completedUpcoming}/${upcomingAssignments.length}`;
     catMessage.insertAdjacentElement("afterend", textElement);
+  }
+}
+
+window.addEventListener("load", () => {
+  adjustImagePosition();
+});
+
+function adjustImagePosition() {
+  const isDyingLeBron = catImage.src.includes("dead_lebron.GIF");
+
+  catImage.classList.remove("tall-character"); // Always reset first
+
+  if (!isDyingLeBron && catImage.naturalHeight > 300) {
+    catImage.classList.add("tall-character");
   }
 }

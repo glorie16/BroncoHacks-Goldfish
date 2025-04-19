@@ -29,3 +29,9 @@ button:hover {
 #battery {
   width: 150px;
 }
+
+/* Moves the image up if it's tall */
+.tall-character {
+  position: relative;
+  top: -75px; /* You can adjust this as needed */
+}
