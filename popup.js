@@ -1,10 +1,41 @@
 // let timerStart = null;
-// let pausedTime = null;
-// let timerInterval = null;
 const catImage = document.getElementById("cat-image");
 const catMessage = document.getElementById("cat-message");
-// const timerDisplay = document.getElementById("timer-display");
 const assignmentsContainer = document.getElementById("assignments-container");
+
+const characters = [
+  {
+    id: 'cat',
+    name: 'Cat',
+    happy: 'images/happy-cat.gif',
+    sad: 'images/sad-cat.gif',
+    dying: 'images/dead-cat.gif'
+  },
+  {
+    id: 'lebron',
+    name: 'LeBron',
+    happy: 'images/happy_lebron.GIF',
+    sad: 'images/angry_lebron.GIF',
+    dying: 'images/dead_lebron.GIF'
+  }
+];
+
+let currentCharacter = characters[0]; // fallback default
+
+document.getElementById("change-character").addEventListener("click", () => {
+  window.location.href = "characters.html";
+});
+
+chrome.storage.local.get('selectedCharacter', (data) => {
+  const selected = data.selectedCharacter || 'cat';
+  const char = characters.find(c => c.id === selected);
+  if (char) {
+    currentCharacter = char;
+    catImage.src = char.happy;
+  } else {
+    catImage.src = 'images/happy-cat.gif'; // fallback
+  }
+});
 
 function updateCatState(overdueAssignments, upcomingAssignments) {
   const anyOverdueNotCompleted = overdueAssignments.some(assignment => !assignment.completed);
@@ -12,76 +43,31 @@ function updateCatState(overdueAssignments, upcomingAssignments) {
   const upcomingPercentage = completedUpcoming / upcomingAssignments.length;
 
   if(anyOverdueNotCompleted){
-    // catImage.src = "images/dying-cat.png";
+    catImage.src = currentCharacter.dying;
     catMessage.textContent = "Oh no! You have missing assignments!";
   } else if(upcomingPercentage < 0.5){
-    // catImage.src = "images/sad-cat.png";
+    catImage.src = currentCharacter.sad;
     catMessage.textContent = "Why aren't we studying...? 😿";
 } else{
-  // catImage.src = "images/happy-cat.png";
+  catImage.src = currentCharacter.happy;
   catMessage.textContent = "Great job! I'm so proud of you!";
   }
 }
 
-// function updateTimerDisplay() {
-//   if (!timerStart) return;
-//   const now = Date.now();
-//   const elapsedMs = now - timerStart;
-//   const minutes = Math.floor(elapsedMs / 60000);
-//   const seconds = Math.floor((elapsedMs % 60000) / 1000);
-//   timerDisplay.textContent = `Timer: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-// }
-
-// document.getElementById("start-timer").addEventListener("click", () => {
-//   if (pausedTime) {
-//     timerStart += Date.now() - pausedTime;
-//     pausedTime = null;
-//   } else {
-//     timerStart = Date.now();
-//   }
-//   chrome.storage.local.set({ timerStart });
-//   catImage.src = "images/happy-cat.png";
-//   catMessage.textContent = "Timer started. Let's study!";
-//   clearInterval(timerInterval);
-//   timerInterval = setInterval(updateTimerDisplay, 1000);
-// });
-
-// document.getElementById("pause-timer").addEventListener("click", () => {
-//   if (timerStart) {
-//     clearInterval(timerInterval);
-//     pausedTime = Date.now();
-//     catMessage.textContent = "Timer paused. Take a quick break!";
-//   }
-// });
-
-// document.getElementById("end-timer").addEventListener("click", () => {
-//   clearInterval(timerInterval);
-//   timerStart = null;
-//   pausedTime = null;
-//   timerDisplay.textContent = "Timer: 00:00";
-//   catImage.src = "images/sad-cat.png";
-//   catMessage.textContent = "Timer ended. Ready to start again?";
-//   chrome.storage.local.set({ timerStart: null });
-// });
-
 document.getElementById("check-status").addEventListener("click", () => {
-  // chrome.storage.local.get("timerStart", (data) => {
-  //   const now = Date.now();
-  //   if (data.timerStart) {
-  //     timerStart = data.timerStart;
-  //     const minutesPassed = (now - data.timerStart) / 60000;
-  //     updateCatState(minutesPassed > 0 && minutesPassed < 60);
-  //     clearInterval(timerInterval);
-  //     timerInterval = setInterval(updateTimerDisplay, 1000);
-  //   } else {
-  //     updateCatState(false);
-  //   }
-  // });
   fetchAssignments();
 });
 
+
+// Canvas OAuth setup (no changes needed unless you're using it)
+// const canvasAuthUrl = `https://<your-canvas-url>/login/oauth2/auth?` +
+//   `client_id=${CLIENT_ID}&` +
+//   `response_type=code&` +
+//   `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
+//   `state=${STATE}`;
+
 function fetchAssignments() {
-  const canvasToken = "---"; // replace with Canvas API token
+  const canvasToken = "7~yKEfzGwkFWA3J3KBGxyC4MeVhMaxuhHzZvuDLmvAM62JTJGLATnMh4rx6aAP9WXn"; // replace with Canvas API token
 
   fetch("https://canvas.instructure.com/api/v1/courses?enrollment_state=active", {
     headers: {
@@ -111,7 +97,6 @@ function fetchAssignments() {
     catMessage.textContent = "Failed to fetch assignments. Check token.";
   });
 }
-
 
 function displayAssignments(assignments) {
   assignmentsContainer.innerHTML = "<h3>Assignments</h3>";
@@ -144,10 +129,10 @@ function displayAssignments(assignments) {
     `;
     assignmentsContainer.appendChild(div);
     if (isOverdue) anyOverdue = true;
-  });
+});
 
-  updatedCompletedText(upcomingAssignments);
-  updateCatState(overdueAssignments, upcomingAssignments);
+updatedCompletedText(upcomingAssignments);
+updateCatState(overdueAssignments, upcomingAssignments);
 }
 
 function updatedCompletedText(upcomingAssignments){
@@ -164,11 +149,3 @@ function updatedCompletedText(upcomingAssignments){
     catMessage.insertAdjacentElement("afterend", textElement);
   }
 }
-
-// window.markComplete = function(button) {
-//   const div = button.parentElement;
-//   div.classList.add("completed");
-//   button.remove();
-//   catImage.src = "images/happy-cat.png";
-//   catMessage.textContent = "Yay! Another task done!";
-// };
