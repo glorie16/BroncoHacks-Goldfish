@@ -52,6 +52,8 @@ function updateCatState(overdueAssignments, upcomingAssignments) {
   catImage.src = currentCharacter.happy;
   catMessage.textContent = "Great job! I'm so proud of you!";
   }
+  adjustImagePosition();
+
 }
 
 document.getElementById("check-status").addEventListener("click", () => {
@@ -169,5 +171,19 @@ function updatedCompletedText(upcomingAssignments){
     textElement.id = "completed-text";
     textElement.textContent = `Completed Upcoming Assignments for This Week: ${completedUpcoming}/${upcomingAssignments.length}`;
     catMessage.insertAdjacentElement("afterend", textElement);
+  }
+}
+
+window.addEventListener("load", () => {
+  adjustImagePosition();
+});
+
+function adjustImagePosition() {
+  const isDyingLeBron = catImage.src.includes("dead_lebron.GIF");
+
+  catImage.classList.remove("tall-character"); // Always reset first
+
+  if (!isDyingLeBron && catImage.naturalHeight > 300) {
+    catImage.classList.add("tall-character");
   }
 }
